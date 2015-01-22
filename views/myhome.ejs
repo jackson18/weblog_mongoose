@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Blog Template for Bootstrap</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/blog.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item active" href="/users/home/<%=uid%>/1">主页</a>
+            <a class="blog-nav-item" href="/home/<%=uid%>/1">广场</a>
+            <a class="blog-nav-item navbar-right" href="/users/logout">登出</a>
+            <a class="blog-nav-item navbar-right" href="/blog/input">写博客</a>
+        </nav>
+    </div>
+</div>
+
+<div class="container">
+    <div class="blog-header">
+        <h1 class="blog-title">我的主页</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+            <div class="blog-post">
+                <% blogs.forEach(function(b){%>
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><span> by <a href="#"><%=b.uname%></a></span><div style="float: right"><%=b.createTime%></div></div>
+                        <div class="panel-body">
+                            <h3><p style="color: #428bca"><%=b.title%></p></h3>
+                            <div><%=b.content%></div>
+                        </div>
+                    </div>
+                <%})%>
+            </div>
+
+            <nav>
+                <ul class="pager">
+                    <li><a href="<%=prePaginationUrl%>">Previous</a></li>
+                    <li><a href="<%=nextPaginationUrl%>">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div><!-- /.container -->
+
+<% include footer%>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

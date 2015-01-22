@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Blog Template for Bootstrap</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/bootstrap-markdown.min.css">
+    <link href="/css/signin.css" rel="stylesheet">
+    <link href="/css/blog.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="/css/bootstrap-markdown.less">
+</head>
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item" href="/users/home/<%=uid%>/1">主页</a>
+            <a class="blog-nav-item" href="/home/<%=uid%>/1">广场</a>
+            <a class="blog-nav-item navbar-right" href="/users/logout">登出</a>
+            <a class="blog-nav-item navbar-right active" href="/blog/input">写博客</a>
+        </nav>
+    </div>
+</div>
+
+<div>
+    <div class="container"><br/><br/><br/></div>
+    <div class="container">
+        <div class="alert alert-danger" role='alert' id="errTip" style="display: none">
+
+        </div>
+        <form action="/blog/save" method="post" id="postForm">
+            <input class='form-control' name="title" type="text" placeholder="标题" id="article_title" />
+            <textarea name="content" data-provide="markdown" rows="10" class="md-input" id="article_content"></textarea>
+            <button type="button" class="btn btn-lg btn-default btn-block" id="sub">发表</button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-markdown.js"></script>
+<script src="/js/to-markdown.js"></script>
+<script src="/js/markdown.js"></script>
+<script>
+    $(function () {
+        $("#sub").click(function () {
+            $.ajax({
+                "url":"/blog/save",
+                "type":"POST",
+                "data":$("#postForm").serialize(),
+                "dataType":"json",
+                "success": function (data) {
+                    var d = eval(data);
+                    if(d.result === 'error'){
+                        $('#errTip').text(d.message);
+                        $('#errTip').css('display','block');
+                    }else{
+                        location.href="/users/home/"+ d.uid+"/1";
+                    }
+                },
+                "error": function (data) {
+                    alert(JSON.stringify(data))
+                }
+            });
+        });
+    })
+
+</script>
+</body>
+</html>

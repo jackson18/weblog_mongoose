@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Blog Template for Bootstrap</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/signin.css" rel="stylesheet">
+    <link href="/css/blog.css" rel="stylesheet">
+    <link href="/css/uploadify.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item" href="/users/home/<%=uid%>/1">主页</a>
+            <a class="blog-nav-item" href="/home/<%=uid%>/1">广场</a>
+            <a class="blog-nav-item navbar-right" href="/users/logout">登出</a>
+            <a class="blog-nav-item navbar-right active" href="/users/userSet">个人设置</a>
+            <a class="blog-nav-item navbar-right" href="/blog/input">写博客</a>
+        </nav>
+    </div>
+</div>
+
+<div class="container"><br/><br/><br/></div>
+<div class="container">
+    <% if(locals['error']){ %>
+    <div class="alert alert-danger" role='alert'>
+        <%= error %>
+    </div>
+    <% } %>
+    <div class="input-group" style="margin-left:auto;margin-right:auto; " >
+        <img src="<%=user.portrait_url%>" style="height: 60px;width: 60px;" class="img-circle" id="headImg"/>
+    </div>
+    <div class="input-group" style="margin-left:auto;margin-right:auto; " >
+        <input class="form-control" type="file" name="headImg" id="headImgFile">
+    </div>
+
+    <form class="form-signin" action="/infoSettings" method="post">
+        <input type="text" class="form-control" placeholder="个性签名" name="signature" value="<%=user.signature%>">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">更改</button>
+    </form>
+</div> <!-- /container -->
+
+
+
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.uploadify.min.js"></script>
+<script>
+    $(function () {
+        $('#headImgFile').uploadify({
+            'fileSizeLimit' : '300KB',
+            'buttonText' : '本地上传',
+            'swf'      : 'uploadify.swf',
+            'uploader' : '/users/headSettings',
+            'fileTypeExts' : '*.jpg; *.png',
+            'onUploadSuccess' : function(file, data, response) {
+                $('#headImg').attr('src',data);
+            }
+        });
+    })
+
+</script>
+</html>
