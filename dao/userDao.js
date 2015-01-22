@@ -1,11 +1,12 @@
 /**
  * Created by Administrator on 2015/1/18.
  */
-var pool = require('../util/pool');
+var userModel = require('../model/userModel');
+var ObjectID = require('mongodb').ObjectID;
 var conf = require('../util/conf');
 
 function getUsersByPageNum(pageNum,callBack){
-    pool.query('select * from user limit ?,?',[(pageNum-1)*conf.pageSize,conf.pageSize],function(err,rows){
+    userModel.find({}).skip((pageNum-1)*conf.pageSize).limit(conf.pageSize).exec(function(err,rows){
         if(err){
             console.log(err);
         }else{
@@ -14,7 +15,7 @@ function getUsersByPageNum(pageNum,callBack){
     });
 }
 function getUserById(uid,callBack){
-    pool.query('select * from user where uid=?',[uid],function(err,rows){
+    userModel.find({_id:new ObjectID(uid)}).exec(function(err,rows){
         if(err){
             console.log(err);
         }else{
@@ -23,7 +24,7 @@ function getUserById(uid,callBack){
     });
 }
 function getUserByName(username,callBack){
-    pool.query('select * from user where username=?',[username],function(err,rows){
+    userModel.find({username:username}).exec(function(err,rows){
         if(err){
             console.log(err);
         }else{
@@ -32,7 +33,7 @@ function getUserByName(username,callBack){
     });
 }
 function getUserByNameAndPass(option,callBack){
-    pool.query('select * from user where username=? and password=?',[option.username,option.password],function(err,rows){
+    userModel.find({username:option.username,password:option.password}).exec(function(err,rows){
         if(err){
             console.log(err);
         }else{
@@ -41,11 +42,16 @@ function getUserByNameAndPass(option,callBack){
     });
 }
 function addUser(option,callBack){
-    pool.query('insert into user(username,password,email) values(?,?,?)',[option.username,option.password,option.email],function(err,rows){
+    var newUser = new userModel({
+        username:option.username,
+        password:option.password,
+        email:option.email
+    });
+    newUser.save(function(err,user){
         if(err){
-            console.log(err);
+            util.log("FATAL"+err);
         }else{
-            callBack(null,rows);
+            callBack(null,user);
         }
     });
 }

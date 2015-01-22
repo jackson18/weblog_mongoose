@@ -21,10 +21,10 @@ router.post('/save',function(req,res,next){
                         console.log(err);
                     }else{
                         console.log(rows);
+                        var json = '{"result":"success","message":"发表成功！","uid":"'+req.session.userid+'"}';
+                        res.send(json);
                     }
                 });
-                var json = '{"result":"success","message":"发表成功！","uid":'+req.session.userid+'}';
-                res.send(json);
             }
         });
     }

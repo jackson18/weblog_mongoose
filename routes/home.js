@@ -12,8 +12,9 @@ router.get('/',function(req,res,next){
             console.log(err);
         }else{
             for(var i=0;i<rows.length;i++){
-                rows[i].createTime=moment(rows[i].createTime).format("YYYY-MM-DD HH:mm:ss");
+                rows[i].createTime=moment(rows[i].createTime).format('YYYY-MM-DD HH:mm:ss');
             }
+            console.log(rows);
             res.render('home.ejs',{uid:req.params.uid,blogs:rows,'prePaginationUrl':'/home/0',nextPaginationUrl:'/home/2'});
         }
     });
@@ -30,7 +31,7 @@ router.get('/:pageNum',function(req,res,next){
             console.log(err);
         }else{
             for(var i=0;i<rows.length;i++){
-                rows[i].createTime=moment(rows[i].createTime).format("YYYY-MM-DD HH:mm:ss");
+                rows[i].createTime=moment(rows[i].createTime).format('YYYY-MM-DD HH:mm:ss');
             }
             res.render('home.ejs',{uid:req.params.uid,blogs:rows,'prePaginationUrl':'/home/'+prePage,nextPaginationUrl:'/home/'+nextPage});
         }
@@ -48,7 +49,7 @@ router.get('/:uid/:pageNum',function(req,res,next){
             console.log(err);
         }else{
             for(var i=0;i<rows.length;i++){
-                rows[i].createTime=moment(rows[i].createTime).format("YYYY-MM-DD HH:mm:ss");
+                rows[i].createTime=moment(rows[i].createTime).format('YYYY-MM-DD HH:mm:ss');
             }
             res.render('home.ejs',{uid:req.params.uid,blogs:rows,'prePaginationUrl':'/home/'+req.params.uid+'/'+prePage,nextPaginationUrl:'/home/'+req.params.uid+'/'+nextPage});
         }

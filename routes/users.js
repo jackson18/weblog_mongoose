@@ -48,8 +48,8 @@ router.post('/login',function(req,res,next){
                 res.render('login.ejs',{error:'用户名或密码不正确！'});
                 return;
             }else {
-                req.session.userid = rows[0].uid;
-                res.redirect('/users/home/' + rows[0].uid+'/1');
+                req.session.userid = rows[0]._id;
+                res.redirect('/users/home/' + rows[0]._id+'/1');
                 return;
             }
         }

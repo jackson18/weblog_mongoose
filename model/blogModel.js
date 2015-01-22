@@ -11,7 +11,7 @@ var BlogSchema = new Schema({
     content: String,
     uid:String,
     uname:String,
-    createTime:Date
+    createTime:{type:Date,default:Date.now}
 });
 
 module.exports = mongoose.model('Blog', BlogSchema);
